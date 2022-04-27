@@ -28,7 +28,7 @@ function App() {
                     }
                 />
                 <Route
-                    path='/estacionamientos/:id'
+                    path='/estacionamientos/:id/*'
                     element={<Estacionamiento />}
                 />
                 <Route path='/formulario' element={<Formulario />} />
