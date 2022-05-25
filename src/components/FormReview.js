@@ -16,7 +16,7 @@ export default function FormReview() {
             .max(25, 'Must be 15 characters or less')
             .required('Required'),
         description: Yup.string()
-            .max(50, 'maximo 50 caracteres')
+            .max(200, 'maximo 200 caracteres')
             .required('desc is required'),
         rating: Yup.number()
             .max(5, 'rating must bea 5 stars')

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useParams, Link } from 'react-router-dom';
 import FormReview from './FormReview';
+import StarRating from './StarRating/StarRating';
 
 export default function Review() {
     const { id } = useParams();
@@ -18,23 +19,43 @@ export default function Review() {
     }, []);
 
     return (
-        <div>
-            <h1>Comentarios</h1>
-            {reviews.map(
-                (item) =>
-                    // eslint-disable-next-line eqeqeq
-                    id == item.parking_id && (
-                        <li key={item.id}>
-                            {item.description} Calificación:{item.rating}
-                        </li>
-                    )
-            )}
-            <Link to='addReview'>
-                <button>Agrega Comentario</button>
-            </Link>
-            <Link to=''>
+        <div className='container'>
+            <div className='row'>
+                <div className='col-12 pb-4 ps-5 '>
+                    {reviews !== undefined &&
+                        reviews.map(
+                            (item, i) =>
+                                // eslint-disable-next-line eqeqeq
+                                id == item.parking_id && (
+                                    <>
+                                        <h4 className='fw-bolder'>
+                                            {item.user}
+                                        </h4>
+                                        <h6
+                                            style={{
+                                                color: 'rgb(255,66,77)',
+                                            }}
+                                        >
+                                            {item.fecha_creacion.substring(
+                                                0,
+                                                10
+                                            )}
+                                        </h6>
+                                        <p className='fw-normal pt-1 pb-4'>
+                                            {item.description}
+                                        </p>
+                                        <hr></hr>
+                                    </>
+                                )
+                        )}
+                </div>
+            </div>
+
+            {/* <Link to=''>
                 <button>Cerrar </button>
-            </Link>
+            </Link> */}
+
+            {/* <StarRating /> */}
 
             <Routes>
                 <Route path='addReview' element={<FormReview />} />

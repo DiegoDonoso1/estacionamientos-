@@ -1,0 +1,14 @@
+.container-carrusel{
+        height: 450px;
+        width: 540px;
+    }
+
+.img{
+    height: 400px;
+}
+.item{
+    height: auto !important;
+    min-height: 200px !important;
+    background: no-repeat center center scroll;
+}
+

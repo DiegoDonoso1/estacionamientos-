@@ -1,45 +1,62 @@
 import { NavLink } from 'react-router-dom';
 import './navbar.css';
-
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from './LoginButton';
 import LogoutBotton from './LogoutBotton';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Icon } from '@iconify/react';
 
-export default function Navbar() {
+export default function NavbarComponent(props) {
     const { isAuthenticated, isLoading } = useAuth0();
+    const idUser = props.id;
     if (!isLoading)
         return (
-            <div>
-                <ul>
-                    {isAuthenticated ? (
-                        <li>
-                            <NavLink
-                                className={({ isActive }) =>
-                                    isActive ? 'active' : ''
-                                }
-                                to='./perfil'
-                            >
-                                perfil
-                            </NavLink>
-                        </li>
-                    ) : (
-                        ''
-                    )}
-                    <li>
-                        <NavLink to='./'>Home</NavLink>
-                    </li>
+            <Navbar collapseOnSelect expand='lg' bg='light' variant='light'>
+                <Container fluid>
+                    <Navbar.Brand className='fs-4 fw-normal'>
+                        <NavLink
+                            className='text-decoration-none text-reset '
+                            to='./'
+                        >
+                            AparClick
+                            <Icon
+                                icon='ant-design:car-filled'
+                                color='#ff424d'
+                                width='31'
+                                height='30'
+                            />
+                        </NavLink>
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+                    <Navbar.Collapse id='responsive-navbar-nav'>
+                        <Nav className='me-auto'>
+                            <Nav.Link href='#features'>Features</Nav.Link>
+                            <Nav.Link>
+                                {isAuthenticated && (
+                                    <NavLink
+                                        className='text-decoration-none text-reset'
+                                        to={`./perfil/${idUser}`}
+                                    >
+                                        perfil
+                                    </NavLink>
+                                )}
+                            </Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link href='#deets'>More deets</Nav.Link>
+                            <Nav.Link eventKey={2} href='#memes'>
+                                Dank memes
+                            </Nav.Link>
 
-                    <li>
-                        <button>
                             {isAuthenticated ? (
                                 <LogoutBotton />
                             ) : (
                                 <LoginButton />
                             )}
-                        </button>
-                    </li>
-                </ul>
-            </div>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         );
 }

@@ -1,13 +1,16 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { TextField } from './TextField';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
+import { getUser } from '../api/Estacionamiento';
 
-export default function FormEsta() {
-    const { user, isAuthenticated } = useAuth0();
+export default function FormEsta({ coordinates, address }) {
+    const { user } = useAuth0();
+    const [userId, setuserId] = useState();
+
     let navigate = useNavigate();
 
     const validate = Yup.object({
@@ -15,46 +18,72 @@ export default function FormEsta() {
             .max(25, 'Must be 15 characters or less')
             .required('Required'),
         tittle: Yup.string()
-            .max(20, 'Must be 20 characters or less')
+            .max(40, 'Must be 20 characters or less')
             .required('Required'),
         desc: Yup.string()
             .max(50, 'maximo 50 caracteres')
             .required('desc is required'),
-        rating: Yup.number()
-            .max(5, 'rating must bea 5 stars')
-            .required('rating is required'),
-        lat: Yup.number()
-            .max(90, 'latitud incorrrecta')
-            .required('lat is required'),
-        long: Yup.number()
-            .max(90, 'long incorrrecta')
-            .required('long is required'),
+        precio: Yup.number()
+            .min(4, 'precio min 4')
+            .required('precio is required'),
+        direccion: Yup.string(),
     });
+
+    const getDataUser = async () => {
+        const data = await getUser();
+        let result = null;
+        data.map((res) => {
+            // eslint-disable-next-line eqeqeq
+            if (res.correo === user.name) {
+                result = res.id;
+            }
+        });
+        setuserId(result);
+    };
+    getDataUser();
+
     return (
         <Formik
             initialValues={{
                 username: `${user.name}`,
                 tittle: '',
                 desc: '',
-                rating: '',
-                lat: '',
-                long: '',
+                precio: '',
+                direccion: `${address}`,
+                imagenes: [],
+                lat: `${coordinates.lat}`,
+                long: `${coordinates.lng}`,
+                user_id: ``,
             }}
-            validationSchema={validate}
+            //validationSchema={validate}
             onSubmit={async (values) => {
+                let data = new FormData();
+
+                data.append('username', values.username);
+                data.append('tittle', values.tittle);
+                data.append('desc', values.desc);
+                data.append('precio', values.precio);
+                data.append('direccion', values.direccion);
+                data.append('imagenes', values.imagenes);
+                data.append('lat', values.lat);
+                data.append('long', values.long);
+                data.append('user_id', userId);
+
+                console.log(values.imagenes);
+
                 await axios
-                    .post('http://127.0.0.1:8000/api/estacionamiento/', values)
+                    .post('http://127.0.0.1:8000/api/estacionamiento/', data)
                     .then((response) => {
                         navigate(`/estacionamientos/${response.data.id}`);
                     });
             }}
         >
-            {(formik) => (
+            {(formProps) => (
                 <div>
                     <h1 className='my-4 font-weight-bold .display-4'>
                         Ingresar estacionamiento
                     </h1>
-                    <Form>
+                    <Form enctype='multipart/form-data'>
                         <TextField
                             label='username'
                             name='username'
@@ -63,9 +92,26 @@ export default function FormEsta() {
                         />
                         <TextField label='tittle' name='tittle' type='text' />
                         <TextField label='desc' name='desc' type='text' />
-                        <TextField label='rating' name='rating' type='int' />
-                        <TextField label='lat' name='lat' type='int' />
-                        <TextField label='long' name='long' type='int' />
+                        <TextField label='precio' name='precio' type='int' />
+                        <input
+                            name='imagenes'
+                            type='file'
+                            onChange={(event) =>
+                                formProps.setFieldValue(
+                                    'imagenes',
+                                    event.target.files[0]
+                                )
+                            }
+                            multiple
+                        />
+                        <TextField
+                            label='direccion'
+                            name='direccion'
+                            type='string'
+                        />
+                        <TextField label='' name='lat' type='hidden' />
+                        <TextField label='' name='long' type='hidden' />
+                        <TextField label='user_id' name='user_id' />
                         <button className='btn btn-dark mt-3' type='submit'>
                             Register
                         </button>
