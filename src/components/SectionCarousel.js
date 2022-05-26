@@ -10,7 +10,7 @@ export default function SectionCarousel(props) {
             >
                 <div className='row pt-2 row justify-content-evenly'>
                     <div className='col ps-5 '>
-                        <h1>Lorem ipsum dolor sit </h1>
+                        <h1>{props.tittle} </h1>
                         <h6 className='ms-2'>{props.direccion}</h6>
                     </div>
                     <div className='col'>

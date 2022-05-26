@@ -11,6 +11,15 @@ export default function HomePage() {
         navigate('/mapa', { replace: false });
     };
 
+    const { loginWithRedirect, isAuthenticated } = useAuth0();
+
+    const handleClickForm = () => {
+        navigate('/formulario');
+    };
+
+
+
+
     const { isLoading } = useAuth0();
     if (!isLoading)
         return (
@@ -319,11 +328,26 @@ export default function HomePage() {
                                     ¿Quieres aprovechar tu estacionamiento?
                                 </h4>
 
-                                <div className='col-12 text-center'>
-                                    <Button className='bg-dark border-dark'>
-                                        Regístrate
-                                    </Button>
-                                </div>
+                                {!isAuthenticated ?(
+                                    <div className='col-12 text-center'>
+                                        <Button
+                                            className='bg-dark border-dark'
+                                            onClick={loginWithRedirect}>
+                                            Ingresa
+                                        </Button>
+                                    </div>
+                                ):(
+                                    <div className='container mt-3 text-center'>
+                                        <Button
+                                            onClick={handleClickForm}
+                                            className='rounded-pill'
+                                            variant='danger'
+                                            style={{
+                                                backgroundColor:'rgb(255,66,77)',
+                                                boxShadow: 'none'
+                                                    }}
+                                        >Publicar Estacionamiento</Button>
+                                    </div>)}
                             </div>
                         </div>
                     </section>

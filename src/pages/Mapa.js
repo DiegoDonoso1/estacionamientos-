@@ -135,9 +135,6 @@ export default function Mapa() {
                                                             Su dueño es{' '}
                                                             <b>{p.username}</b>
                                                         </span>
-                                                        <span className='date'>
-                                                            Hace <b>10s</b>
-                                                        </span>
                                                     </div>
                                                 </Popup>
                                             )}
@@ -145,12 +142,15 @@ export default function Mapa() {
                                     ))}
                                     <div>
                                         <Button
+                                            variant='danger'
                                             onClick={handleClick}
                                             style={{
                                                 position: 'absolute',
                                                 top: '85%',
                                                 left: '50%',
                                                 zIndex: 1,
+                                                backgroundColor:'rgb(255,66,77)',
+                                                boxShadow: 'none'
                                             }}
                                         >
                                             Mostrar Lista

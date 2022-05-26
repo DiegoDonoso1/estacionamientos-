@@ -1,10 +1,15 @@
 import React from 'react';
 import { Stack, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function SectionDesc(props) {
     const { id } = useParams();
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/perfil/${props.idEstacionamiento}`);
+    };
 
     return (
         <div className='container p-5'>
@@ -19,6 +24,7 @@ export default function SectionDesc(props) {
                 </div>
                 <div className='ps-5 pb-3'>
                     <Button
+                        onClick={handleClick}
                         style={
                             ({ padding: 'auto' },
                             { fontSize: '35px' },

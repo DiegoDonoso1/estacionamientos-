@@ -31,23 +31,27 @@ export default function NavbarComponent(props) {
                     <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                     <Navbar.Collapse id='responsive-navbar-nav'>
                         <Nav className='me-auto'>
-                            <Nav.Link href='#features'>Features</Nav.Link>
-                            <Nav.Link>
-                                {isAuthenticated && (
+                            <Nav.Link >
                                     <NavLink
                                         className='text-decoration-none text-reset'
-                                        to={`./perfil/${idUser}`}
+                                        to={`/mapa`}
                                     >
-                                        perfil
+                                        Estacionamientos
                                     </NavLink>
-                                )}
                             </Nav.Link>
                         </Nav>
                         <Nav>
-                            <Nav.Link href='#deets'>More deets</Nav.Link>
-                            <Nav.Link eventKey={2} href='#memes'>
-                                Dank memes
-                            </Nav.Link>
+                            <Nav.Link>
+                                    {isAuthenticated && (
+                                        <NavLink
+                                            className='text-decoration-none text-reset'
+                                            to={`./perfil/${idUser}`}
+                                        >
+                                            Perfil
+                                        </NavLink>
+                                    )}
+                                </Nav.Link>
+                            
 
                             {isAuthenticated ? (
                                 <LogoutBotton />

@@ -85,13 +85,13 @@ export default function FormEsta({ coordinates, address }) {
                     </h1>
                     <Form enctype='multipart/form-data'>
                         <TextField
-                            label='username'
+                            label='correo'
                             name='username'
                             type='text'
                             disabled
                         />
-                        <TextField label='tittle' name='tittle' type='text' />
-                        <TextField label='desc' name='desc' type='text' />
+                        <TextField label='título' name='tittle' type='text' />
+                        <TextField label='descripción estacionamiento' name='desc' type='text' />
                         <TextField label='precio' name='precio' type='int' />
                         <input
                             name='imagenes'
@@ -105,13 +105,12 @@ export default function FormEsta({ coordinates, address }) {
                             multiple
                         />
                         <TextField
-                            label='direccion'
+                            label='dirección'
                             name='direccion'
                             type='string'
                         />
                         <TextField label='' name='lat' type='hidden' />
                         <TextField label='' name='long' type='hidden' />
-                        <TextField label='user_id' name='user_id' />
                         <button className='btn btn-dark mt-3' type='submit'>
                             Register
                         </button>

@@ -25,7 +25,7 @@ export default function Login() {
     if (!isLoading)
         return (
             <>
-                <div className='container-fluid bg-primary'>
+                <div className='container-fluid '>
                     <div className='row'>
                         <div className='col-6 mb-5'>
                             <img

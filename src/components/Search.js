@@ -47,15 +47,22 @@ export default function Search() {
                         <div>
                             {hide && (
                                 <>
+                                    <h3>Ingresa la dirección de tu estacionamiento</h3>
                                     <div className=''>
                                         <input
                                             {...getInputProps({
-                                                placeholder: 'Type address',
+                                                placeholder: 'Ingresa tu dirección',
                                             })}
                                         />
                                     </div>
                                     <div className='mt-2'>
-                                        <Button onClick={handleClick}>
+                                        <Button
+                                            variant='danger'
+                                            style={{
+                                                backgroundColor:'rgb(255,66,77)',
+                                                boxShadow: 'none'
+                                                }}
+                                            onClick={handleClick}>
                                             continuar
                                         </Button>
                                     </div>

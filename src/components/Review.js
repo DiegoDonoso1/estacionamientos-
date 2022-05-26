@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useParams, Link } from 'react-router-dom';
 import FormReview from './FormReview';
 import StarRating from './StarRating/StarRating';
+import { Icon } from '@iconify/react';
 
 export default function Review() {
     const { id } = useParams();
     const [reviews, setReviews] = useState([]);
+
 
     useEffect(() => {
         const getReviews = async () => {
@@ -41,6 +43,24 @@ export default function Review() {
                                                 10
                                             )}
                                         </h6>
+                                        <div className=''>
+                                            {[...Array(5)].map((star, i) => {
+                                                const ratingValue = i + 1;
+                                                return (
+                                                    <Icon
+                                                        key={i}
+                                                        icon='ant-design:star-filled'
+                                                        color={
+                                                            ratingValue <= item.rating
+                                                                ? '#FF424D'
+                                                                : '#e4e5e9'
+                                                        }
+                                                        width='31'
+                                                        height='30'
+                                                    />
+                                                );
+                                            })}
+                                        </div>
                                         <p className='fw-normal pt-1 pb-4'>
                                             {item.description}
                                         </p>

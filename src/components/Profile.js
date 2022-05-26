@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from 'react';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import getEstacionamiento from '../api/Estacionamiento';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import  noEstacionamiento  from '../assets/noEstacionamiento.png'
 
 export default function Profile() {
     const [estacionamiento, setEstacionamiento] = useState([]);
@@ -40,25 +41,33 @@ export default function Profile() {
                 <Row>
                     {estacionamiento.length > 0 ? (
                         estacionamiento.map((esta, i) => (
-                            <Col className='mt-5 mb-5'>
-                                <Card style={{ width: '18rem' }}>
-                                    {imagen[i].producto_id === esta.id && (
-                                        <Card.Img
-                                            variant='top'
-                                            src={`http://127.0.0.1:8000/media/${imagen[i].imagen}`}
-                                        />
-                                    )}
-                                    <Card.Body>
-                                        <Card.Title>{esta.tittle}</Card.Title>
-                                        <Card.Text>{esta.desc}</Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
+                            <Link
+                                className='text-decoration-none text-muted'
+                                to={`/estacionamientos/${esta.id}`}>
+                                    <Col className='mt-5 mb-5'>
+                                        <Card style={{ width: '18rem' }}>
+                                            {imagen[i].producto_id === esta.id && (
+                                                <Card.Img
+                                                    variant='top'
+                                                    src={`http://127.0.0.1:8000/media/${imagen[i].imagen}`}
+                                                />
+                                            )}
+                                            <Card.Body>
+                                                <Card.Title>{esta.tittle}</Card.Title>
+                                                <Card.Text>{esta.desc}</Card.Text>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                            </Link>
                         ))
                     ) : (
-                        <div className='container'>
-                            <div>
-                                Este perfil aun no publica estacionamientos
+                        <div className='container mt-5'>
+                            <div className='text-center'>
+                                <h5>Este usuario aún no tiene estacionamientos publicados</h5>
+                                <img
+                                    height='500px'
+                                    width='500px'
+                                    src={noEstacionamiento} alt=''/>
                             </div>
                         </div>
                     )}

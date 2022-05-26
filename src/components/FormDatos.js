@@ -56,10 +56,11 @@ export default function FormDatos() {
                     data.append('rut', values.rut);
                     data.append('fechaNacimiento', values.fechaNacimiento);
 
-                    await axios.post('http://127.0.0.1:8000/user/user/', data);
-                    /* .then((response) => {
-                            navigate(`/estacionamientos/${response.data.id}`);
-                        }); */
+                    await axios.post('http://127.0.0.1:8000/user/user/', data)
+                    .then((response) => {
+                        console.log(response)
+                            navigate(`/`);
+                        });
                 }}
             >
                 {(formik) => (

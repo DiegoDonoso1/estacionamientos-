@@ -22,6 +22,7 @@ export default function Estacionamiento() {
     const precio = estacionamiento.precio;
     const imagen = imagenes.imagen;
     const direccion = estacionamiento.direccion;
+    const idEstacionamiento= estacionamiento.id
 
     const sumaStars = reviews.reduce(
         function (acumulador, nexValue) {
@@ -74,8 +75,10 @@ export default function Estacionamiento() {
                         precio={precio}
                         imagen={imagen}
                         direccion={direccion}
+                        tittle={tittle}
                     />
-                    <SectionDesc tittle={tittle} desc={desc} nombre={nombre} />
+                    <SectionDesc tittle={tittle} desc={desc} nombre={nombre} idEstacionamiento=
+                    {idEstacionamiento} />
                 </div>
                 <SectionStars promedio={promedio} />
                 <Review />
