@@ -9,7 +9,7 @@ export default function Formulario() {
         return (
             <div className='container mt-3'>
                 <div className='row align-items-center'>
-                    <div className='col md-5 text-center'>
+                    <div className='col md-5 '>
                         <Search />
                     </div>
                     <div className='col-md-7 my-auto'>

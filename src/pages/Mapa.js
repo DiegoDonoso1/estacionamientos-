@@ -7,7 +7,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import './mapa.css';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Button } from 'react-bootstrap';
@@ -15,11 +14,9 @@ import { Button } from 'react-bootstrap';
 export default function Mapa() {
     const navigate = useNavigate();
     let location = useLocation();
-    console.log(location);
 
     const MAPBOX_TOKEN =
         'pk.eyJ1IjoiaWhvbHMiLCJhIjoiY2wxaDBqN20xMGhpcDNrcGJjbnYwMGJqdCJ9.3BrY2IMad1HP4mPFI0jAEw';
-    const { id } = useParams();
     const { isLoading } = useAuth0();
     const [pins, setPins] = useState([]);
     const [currentPlaceId, SetCurrentPlaceId] = useState(null);
@@ -82,75 +79,91 @@ export default function Mapa() {
                                 >
                                     <NavigationControl />
 
-                                    {pins.map((p, index) => (
-                                        <>
-                                            <Marker
-                                                longitude={p.long}
-                                                latitude={p.lat}
-                                                anchor='bottom'
-                                            >
-                                                <DirectionsCarIcon
-                                                    key={index}
-                                                    sx={{ color: '#FF424D' }}
-                                                    style={{ fontSize: 30 }}
-                                                    onClick={() =>
-                                                        handleMarkerClick(p.id)
-                                                    }
-                                                />
-                                            </Marker>
-
-                                            {p.id === currentPlaceId && (
-                                                <Popup
-                                                    key={p.id}
+                                    {pins !== undefined &&
+                                        pins.map((p, index) => (
+                                            <>
+                                                <Marker
                                                     longitude={p.long}
                                                     latitude={p.lat}
-                                                    anchor='left'
-                                                    closeButton={true}
-                                                    closeOnClick={false}
-                                                    onClose={() =>
-                                                        SetCurrentPlaceId(null)
-                                                    }
+                                                    anchor='bottom'
                                                 >
-                                                    <div className='card'>
-                                                        <label>Lugar</label>
-                                                        <h4 className='parking'>
-                                                            {p.tittle}
-                                                        </h4>
-                                                        <label>Review</label>
-                                                        <p className='desc'>
-                                                            {p.desc}
-                                                        </p>
-                                                        <label>Rating</label>
-                                                        <div className='stars'>
-                                                            <StarIcon className='star' />
-                                                            <StarIcon className='star' />
-                                                            <StarIcon className='star' />
-                                                            <StarIcon className='star' />
-                                                            <StarIcon className='star' />
+                                                    <DirectionsCarIcon
+                                                        key={index}
+                                                        sx={{
+                                                            color: '#FF424D',
+                                                        }}
+                                                        style={{ fontSize: 30 }}
+                                                        onClick={() =>
+                                                            handleMarkerClick(
+                                                                p.id
+                                                            )
+                                                        }
+                                                    />
+                                                </Marker>
+
+                                                {p.id === currentPlaceId && (
+                                                    <Popup
+                                                        key={p.id}
+                                                        longitude={p.long}
+                                                        latitude={p.lat}
+                                                        anchor='left'
+                                                        closeButton={true}
+                                                        closeOnClick={false}
+                                                        onClose={() =>
+                                                            SetCurrentPlaceId(
+                                                                null
+                                                            )
+                                                        }
+                                                    >
+                                                        <div className='card'>
+                                                            <label>Lugar</label>
+                                                            <h4 className='parking'>
+                                                                {p.tittle}
+                                                            </h4>
+                                                            <label>
+                                                                Review
+                                                            </label>
+                                                            <p className='desc'>
+                                                                {p.desc}
+                                                            </p>
+                                                            <label>
+                                                                Rating
+                                                            </label>
+                                                            <div className='stars'>
+                                                                <StarIcon className='star' />
+                                                                <StarIcon className='star' />
+                                                                <StarIcon className='star' />
+                                                                <StarIcon className='star' />
+                                                                <StarIcon className='star' />
+                                                            </div>
+                                                            <label>
+                                                                Información
+                                                            </label>
+                                                            <span className='username'>
+                                                                Su dueño es{' '}
+                                                                <b>
+                                                                    {p.username}
+                                                                </b>
+                                                            </span>
                                                         </div>
-                                                        <label>
-                                                            Información
-                                                        </label>
-                                                        <span className='username'>
-                                                            Su dueño es{' '}
-                                                            <b>{p.username}</b>
-                                                        </span>
-                                                    </div>
-                                                </Popup>
-                                            )}
-                                        </>
-                                    ))}
+                                                    </Popup>
+                                                )}
+                                            </>
+                                        ))}
                                     <div>
                                         <Button
+                                            className='rounded-pill'
                                             variant='danger'
                                             onClick={handleClick}
                                             style={{
                                                 position: 'absolute',
                                                 top: '85%',
-                                                left: '50%',
+                                                left: '45%',
+                                                /* right: '50%', */
                                                 zIndex: 1,
-                                                backgroundColor:'rgb(255,66,77)',
-                                                boxShadow: 'none'
+                                                backgroundColor:
+                                                    'rgb(255,66,77)',
+                                                boxShadow: 'none',
                                             }}
                                         >
                                             Mostrar Lista

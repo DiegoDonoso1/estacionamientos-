@@ -1,0 +1,23 @@
+/* .fondo{
+    height: 35vh;
+    width: 100%;
+    background-image: url('../../assets/blurry-gradient-haikei.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+     */
+
+.fondo-lateral{
+        background-color: #F5F4F2;
+    }
+
+.img-perfil {
+    border-radius: 50%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+    width: 250px;
+}

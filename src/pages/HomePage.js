@@ -17,9 +17,6 @@ export default function HomePage() {
         navigate('/formulario');
     };
 
-
-
-
     const { isLoading } = useAuth0();
     if (!isLoading)
         return (
@@ -328,26 +325,31 @@ export default function HomePage() {
                                     ¿Quieres aprovechar tu estacionamiento?
                                 </h4>
 
-                                {!isAuthenticated ?(
+                                {!isAuthenticated ? (
                                     <div className='col-12 text-center'>
                                         <Button
                                             className='bg-dark border-dark'
-                                            onClick={loginWithRedirect}>
+                                            onClick={loginWithRedirect}
+                                        >
                                             Ingresa
                                         </Button>
                                     </div>
-                                ):(
+                                ) : (
                                     <div className='container mt-3 text-center'>
                                         <Button
                                             onClick={handleClickForm}
                                             className='rounded-pill'
                                             variant='danger'
                                             style={{
-                                                backgroundColor:'rgb(255,66,77)',
-                                                boxShadow: 'none'
-                                                    }}
-                                        >Publicar Estacionamiento</Button>
-                                    </div>)}
+                                                backgroundColor:
+                                                    'rgb(255,66,77)',
+                                                boxShadow: 'none',
+                                            }}
+                                        >
+                                            Publicar Estacionamiento
+                                        </Button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </section>

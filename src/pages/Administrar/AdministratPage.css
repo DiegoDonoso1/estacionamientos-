@@ -1,0 +1,11 @@
+
+.table-img{
+    width: 100%;
+    height: auto;
+}
+@supports(object-fit: cover){
+    .table-img{
+        height: 100px;
+        object-fit: cover;
+        object-position: center center;
+    }}

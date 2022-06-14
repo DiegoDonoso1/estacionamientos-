@@ -31,27 +31,36 @@ export default function NavbarComponent(props) {
                     <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                     <Navbar.Collapse id='responsive-navbar-nav'>
                         <Nav className='me-auto'>
-                            <Nav.Link >
-                                    <NavLink
-                                        className='text-decoration-none text-reset'
-                                        to={`/mapa`}
-                                    >
-                                        Estacionamientos
-                                    </NavLink>
+                            <Nav.Link>
+                                <NavLink
+                                    className='text-decoration-none text-reset'
+                                    to={`/mapa`}
+                                >
+                                    Estacionamientos
+                                </NavLink>
                             </Nav.Link>
                         </Nav>
                         <Nav>
                             <Nav.Link>
-                                    {isAuthenticated && (
-                                        <NavLink
-                                            className='text-decoration-none text-reset'
-                                            to={`./perfil/${idUser}`}
-                                        >
-                                            Perfil
-                                        </NavLink>
-                                    )}
-                                </Nav.Link>
-                            
+                                {isAuthenticated && props.admin && (
+                                    <NavLink
+                                        className='text-decoration-none text-reset'
+                                        to={`/administrar`}
+                                    >
+                                        Administrar
+                                    </NavLink>
+                                )}
+                            </Nav.Link>
+                            <Nav.Link>
+                                {isAuthenticated && (
+                                    <NavLink
+                                        className='text-decoration-none text-reset'
+                                        to={`./perfil/${idUser}`}
+                                    >
+                                        Perfil
+                                    </NavLink>
+                                )}
+                            </Nav.Link>
 
                             {isAuthenticated ? (
                                 <LogoutBotton />

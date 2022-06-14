@@ -5,6 +5,7 @@ import { TextField } from './TextField';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
+import PersonaData from '../assets/PersonaData.png';
 
 export default function FormDatos() {
     const navigate = useNavigate();
@@ -56,80 +57,80 @@ export default function FormDatos() {
                     data.append('rut', values.rut);
                     data.append('fechaNacimiento', values.fechaNacimiento);
 
-                    await axios.post('http://127.0.0.1:8000/user/user/', data)
-                    .then((response) => {
-                        console.log(response)
+                    await axios
+                        .post('http://127.0.0.1:8000/user/user/', data)
+                        .then((response) => {
+                            console.log(response);
                             navigate(`/`);
                         });
                 }}
             >
                 {(formik) => (
                     <div className='container'>
-                        <h1 className='my-4 font-weight-bold .display-4'>
-                            Ingrese sus datos
-                        </h1>
-                        <Form>
-                            <div className='row'>
-                                <div className='col-6'>
+                        <div className='row'>
+                            <div className='col-xl-6 col-lg-6 col-12'>
+                                <h1 className='my-4 font-weight-bold .display-4'>
+                                    Ingrese sus datos
+                                </h1>
+                                <Form>
                                     <TextField
-                                        label='username'
+                                        label='Correo'
                                         name='username'
                                         type='text'
                                         disabled
                                     />
-                                </div>
-                                <div className='col-6'>
+
                                     <TextField
-                                        label='nombre'
+                                        label='Nombre'
                                         name='nombre'
                                         type='text'
                                     />
-                                </div>
-                                <div className='col-6'>
+
                                     <TextField
-                                        label='apellido paterno'
+                                        label='Apellido paterno'
                                         name='apellidoP'
                                         type='text'
                                     />
-                                </div>
-                                <div className='col-6'>
+
                                     <TextField
-                                        label='apellido materno'
+                                        label='Apellido materno'
                                         name='apellidoM'
                                         type='text'
                                     />
-                                </div>
-                                <div className='col-6'>
+
                                     <TextField
-                                        label='celular'
+                                        label='Celular'
                                         name='celular'
                                         type='int'
                                     />
-                                </div>
-                                <div className='col-6'>
+
                                     <TextField
-                                        label='rut'
+                                        label='Rut'
                                         name='rut'
                                         type='text'
                                     />
-                                </div>
-                            </div>
 
-                            <TextField
-                                label='fecha nacimiento'
-                                name='fechaNacimiento'
-                                type='date'
-                            />
-                            <button className='btn btn-dark mt-3' type='submit'>
-                                Register
-                            </button>
-                            <button
-                                className='btn btn-danger mt-3 ml-3'
-                                type='reset'
-                            >
-                                Reset
-                            </button>
-                        </Form>
+                                    <TextField
+                                        label='Fecha nacimiento'
+                                        name='fechaNacimiento'
+                                        type='date'
+                                    />
+                                    <button
+                                        className='btn btn-dark mt-3'
+                                        type='submit'
+                                    >
+                                        Registrarse
+                                    </button>
+                                </Form>
+                            </div>
+                            <div className='col-xl-6 col-lg-6 col-12 my-auto'>
+                                <img
+                                    className='img-fluid w-100'
+                                    src={PersonaData}
+                                    alt=''
+                                />
+                            </div>
+                        </div>
                     </div>
                 )}
             </Formik>

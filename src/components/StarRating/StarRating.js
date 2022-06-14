@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 import './StarRating.css';
 
-export default function StarRating() {
-    const [rating, setRating] = useState(null);
+export default function StarRating({ rating, ratingChange }) {
+    /* const [rating, setRating] = useState(null); */
     const [hover, setHover] = useState(null);
 
     return (
@@ -17,7 +17,9 @@ export default function StarRating() {
                             type='radio'
                             name='rating'
                             value={ratingValue}
-                            onClick={() => setRating(ratingValue)}
+                            onClick={() => {
+                                ratingChange(ratingValue);
+                            }}
                         />
                         <Icon
                             icon='ant-design:star-filled'

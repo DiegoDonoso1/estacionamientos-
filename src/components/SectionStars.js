@@ -8,9 +8,9 @@ export default function SectionStars(props) {
     const { isAuthenticated } = useAuth0();
     const prom = Math.round(props.promedio);
     return (
-        <div className='container pb-5 '>
+        <div className='container  '>
             <div className='row'>
-                <div className='col ps-5 '>
+                <div className='col-xl-6 col-md-6 col-12 ps-5 '>
                     <h3>Valoración de los usuarios</h3>
                     <Stack gap={2} className='' direction='horizontal'>
                         <p className='ps-5 pt-4 fs-2'>{prom > 0 ? prom : 0}</p>
@@ -36,7 +36,7 @@ export default function SectionStars(props) {
                 </div>
 
                 {isAuthenticated && (
-                    <div className='col text-end p-5'>
+                    <div className='col-xl-6 col-md-6 col-lg-6 col-12 text-end-xl text-center p-5'>
                         <Link to='addReview'>
                             <Button
                                 style={

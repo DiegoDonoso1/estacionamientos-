@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FormEsta from '../components/Form';
+import FormEsta from './FormEsta/Form';
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
@@ -47,11 +47,15 @@ export default function Search() {
                         <div>
                             {hide && (
                                 <>
-                                    <h3>Ingresa la dirección de tu estacionamiento</h3>
+                                    <h3>
+                                        Ingresa la dirección de tu
+                                        estacionamiento
+                                    </h3>
                                     <div className=''>
                                         <input
                                             {...getInputProps({
-                                                placeholder: 'Ingresa tu dirección',
+                                                placeholder:
+                                                    'Ingresa tu dirección',
                                             })}
                                         />
                                     </div>
@@ -59,10 +63,12 @@ export default function Search() {
                                         <Button
                                             variant='danger'
                                             style={{
-                                                backgroundColor:'rgb(255,66,77)',
-                                                boxShadow: 'none'
-                                                }}
-                                            onClick={handleClick}>
+                                                backgroundColor:
+                                                    'rgb(255,66,77)',
+                                                boxShadow: 'none',
+                                            }}
+                                            onClick={handleClick}
+                                        >
                                             continuar
                                         </Button>
                                     </div>
