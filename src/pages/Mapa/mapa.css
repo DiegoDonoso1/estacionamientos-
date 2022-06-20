@@ -1,19 +1,17 @@
-.card-list{
-    width: 300px;
-    height: 400px;
+
+.card-pop{
+    width: 200px;
+    height: 300px;
     border: none
 }
 
-.card-img-top{
+.card-img-pop{
     width: 100%;
     height: auto;
 }
 @supports(object-fit: cover){
-    .card-img-top{
+    .card-img-pop{
         height: 250px;
         object-fit: cover;
         object-position: center center;
     }}
-
-
-

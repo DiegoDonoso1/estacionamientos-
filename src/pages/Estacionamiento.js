@@ -12,7 +12,6 @@ import { Button, Dropdown } from 'react-bootstrap';
 import { Icon } from '@iconify/react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import ContratoPDF from '../components/ContratoPDF';
 
 export default function Estacionamiento({ promedioChanged, promedio }) {
     const { isLoading, user, isAuthenticated } = useAuth0();
@@ -45,8 +44,6 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
     const lat = estacionamiento.lat;
     const user_id = estacionamiento.user_id;
 
-    console.log(estacionamiento);
-
     const handleClick = (e) => {
         /* estacionamiento.map((item, index) => {
             if (index == e.currentTarget.id) { */
@@ -78,6 +75,10 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
                 navigate('/');
             }
         });
+    };
+
+    const handleClickGenerate = (e) => {
+        navigate(`/generarpdf/${e.currentTarget.id}`);
     };
 
     const handleReview1 = (reviewChanges) => {
@@ -184,6 +185,12 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
 
                                     <Dropdown.Menu>
                                         <Dropdown.Item
+                                            onClick={handleClickGenerate}
+                                            id={idEstacionamiento}
+                                        >
+                                            Generar contrato
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
                                             id={id}
                                             onClick={handleClick}
                                         >
@@ -234,7 +241,6 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
                             reviewChanged={handleReview1}
                             UserUnique={userUnique}
                         />
-                        <ContratoPDF />
                         <Footer />
                     </>
                 )}

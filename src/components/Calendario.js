@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function Calendario() {
+export default function Calendario({ handleCalendario, fechaI }) {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const onChange = (dates) => {
@@ -22,6 +22,11 @@ export default function Calendario() {
     return (
         <>
             <DatePicker
+                dateFormat='dd/MM/yyyy'
+                selected={fechaI}
+                onChange={(date) => handleCalendario(date)}
+            />
+            {/* <DatePicker
                 selected={startDate}
                 onChange={onChange}
                 startDate={startDate}
@@ -35,7 +40,7 @@ export default function Calendario() {
                 placeholderText={`${endDate}`}
                 readOnly
             />
-            <button onClick={handleReview1}>click</button>
+            <button onClick={handleReview1}>click</button> */}
         </>
     );
 }

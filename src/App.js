@@ -3,10 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
-import Mapa from './pages/Mapa';
+import Mapa from './pages/Mapa/Mapa';
 import './App.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 import NavbarComponent from './components/Navbar';
 import Estacionamiento from './pages/Estacionamiento';
@@ -24,6 +22,7 @@ import ListaEstacionamientos from './pages/ListaEstacionamientos';
 import { getUser } from './api/Estacionamiento';
 import EditarEsta from './pages/EditarPage';
 import Spinner from './components/spinner/Spinner';
+import FormularioPdf from './pages/FormularioPdf';
 
 function App() {
     const { isAuthenticated, isLoading, user } = useAuth0();
@@ -71,7 +70,7 @@ function App() {
                 <NavbarComponent id={userId} admin={admin} />
                 <Routes>
                     <Route path='/' element={<HomePage />} />
-                    <Route path='/about' element={<AboutPage />} />
+                    <Route path='/terminos' element={<AboutPage />} />
                     <Route
                         path='/perfil/:id'
                         element={<Login promedio={promedio} />}
@@ -110,6 +109,11 @@ function App() {
                         element={
                             isAuthenticated ? <Formulario /> : <RequiereAuth />
                         }
+                    />
+
+                    <Route
+                        path='/generarpdf/:id'
+                        element={<FormularioPdf userId={userId} />}
                     />
 
                     <Route

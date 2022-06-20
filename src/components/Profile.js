@@ -102,7 +102,7 @@ export default function Profile({ promedio }) {
                                                 {esta.tittle}
                                             </Card.Title>
                                             <Card.Text className='text-muted mb-1 lh-1'>
-                                                {esta.desc}
+                                                {esta.direccion}
                                             </Card.Text>
                                             <Card.Text className='fw-normal '>
                                                 $

@@ -7,9 +7,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import './mapa.css';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { Button, Row, Col, Container, Card } from 'react-bootstrap';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { Button } from 'react-bootstrap';
 
 export default function Mapa() {
     const navigate = useNavigate();
@@ -20,13 +20,31 @@ export default function Mapa() {
     const { isLoading } = useAuth0();
     const [pins, setPins] = useState([]);
     const [currentPlaceId, SetCurrentPlaceId] = useState(null);
+    const [imagenes, setImagenes] = useState([]);
 
     useEffect(() => {
         const getPins = async () => {
             try {
+                const imagen = [];
                 const res = await axios.get(
                     'http://127.0.0.1:8000/api/estacionamiento/'
                 );
+                const imagenes = res.data.imagenes;
+                const estacionamientos = res.data.estacionamientos;
+                estacionamientos.map((resp, i) => {
+                    imagenes.map((item) => {
+                        if (item.producto_id == resp.id) {
+                            imagen.push(item);
+                        }
+                    });
+                });
+                const result = imagen.reduce((acc, item, i) => {
+                    if (!acc.find((d) => d.producto_id == item.producto_id)) {
+                        acc.push(item);
+                    }
+                    return acc;
+                }, []);
+                setImagenes(result);
                 setPins(res.data.estacionamientos);
             } catch (err) {
                 console.log(err);
@@ -115,7 +133,7 @@ export default function Mapa() {
                                                             )
                                                         }
                                                     >
-                                                        <div className='card'>
+                                                        {/* <div className='card'>
                                                             <label>Lugar</label>
                                                             <h4 className='parking'>
                                                                 {p.tittle}
@@ -145,7 +163,38 @@ export default function Mapa() {
                                                                     {p.username}
                                                                 </b>
                                                             </span>
-                                                        </div>
+                                                        </div> */}
+                                                        <Card
+                                                            className='border-0 card-pop'
+                                                            style={{
+                                                                width: '18rem',
+                                                            }}
+                                                        >
+                                                            <Card.Img
+                                                                className='rounded-3 card-img-pop'
+                                                                variant='top'
+                                                                src={`http://127.0.0.1:8000/media/${imagenes[index].imagen}`}
+                                                            />
+                                                            <Card.Body className='p-0'>
+                                                                <Card.Title className='fs-5 fw-normal mt-1 mb-1'>
+                                                                    {p.tittle}
+                                                                </Card.Title>
+                                                                <Card.Text className='text-muted mb-1 lh-1'>
+                                                                    {
+                                                                        p.direccion
+                                                                    }
+                                                                </Card.Text>
+                                                                <Card.Text className='fw-normal '>
+                                                                    $
+                                                                    {new Intl.NumberFormat(
+                                                                        'de-DE'
+                                                                    ).format(
+                                                                        p.precio
+                                                                    ) + ' '}
+                                                                    CLP
+                                                                </Card.Text>
+                                                            </Card.Body>
+                                                        </Card>
                                                     </Popup>
                                                 )}
                                             </>

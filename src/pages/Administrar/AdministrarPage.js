@@ -183,7 +183,7 @@ export default function AdministrarPage(props) {
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>id</th>
+                                <th>Ver</th>
                                 <th>Nombre</th>
                                 <th>Imagenes</th>
                                 <th>Acciones</th>
@@ -194,7 +194,12 @@ export default function AdministrarPage(props) {
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td id={esta.id} onClick={handleId}>
-                                        {esta.id}
+                                        <Icon
+                                            icon='akar-icons:eye-open'
+                                            color='#3b3938'
+                                            width='30'
+                                            height='30'
+                                        />
                                     </td>
 
                                     <td>{esta.tittle}</td>
@@ -210,7 +215,10 @@ export default function AdministrarPage(props) {
                                     <td>
                                         <Dropdown>
                                             <Dropdown.Toggle
-                                                variant='danger'
+                                                style={{
+                                                    backgroundColor: '#fff',
+                                                }}
+                                                variant='gray'
                                                 id='dropdown-basic'
                                                 size='sm'
                                             >

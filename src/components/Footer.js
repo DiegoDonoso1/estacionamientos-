@@ -18,10 +18,10 @@ const Footer = () => {
                     <ul className='d-flex justify-content-center list-unstyled'>
                         <li>
                             <Link
-                                to='/about'
+                                to='/terminos'
                                 className='d-inline-block pe-3 text-decoration-none text-reset '
                             >
-                                Termino y condiciones
+                                Términos y Condiciones
                             </Link>
                         </li>
                         <li>

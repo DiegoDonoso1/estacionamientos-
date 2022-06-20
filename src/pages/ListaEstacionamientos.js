@@ -125,7 +125,7 @@ export default function ListaEstacionamientos() {
                                     className='col align-self-center'
                                 >
                                     <Card
-                                        className='border-0 m-xl-2 m-4 '
+                                        className='border-0 m-xl-2 m-4 card-list'
                                         style={{
                                             width: '18rem',
                                         }}
