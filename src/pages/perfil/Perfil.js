@@ -51,6 +51,7 @@ export default function Login({ promedio }) {
                             <div className='text-center'>
                                 <h1> {`${info.nombre} ${info.apellido_P}`} </h1>
                                 <h5>{info.correo}</h5>
+                                <h6 className='fs-5'>+56 {info.celular}</h6>
                             </div>
                         </div>
 
