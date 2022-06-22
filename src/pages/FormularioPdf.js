@@ -8,10 +8,14 @@ import Calendario from '../components/Calendario';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function FormularioPdf({ userId }) {
     const MySwal = withReactContent(Swal);
     const navigate = useNavigate();
+    const [startDate, setStartDate] = useState(new Date());
     const [banco, setBanco] = useState();
     const [fechaI, setFechaI] = useState(new Date());
     const { id } = useParams();
@@ -50,6 +54,10 @@ export default function FormularioPdf({ userId }) {
                 fechaI: ``,
                 nCuenta: ``,
                 user_id: ``,
+                nEstacionamiento: ``,
+                nBienes: ``,
+                nombreEsta: ``,
+                nInsc: ``,
             }}
             //validationSchema={validate}
             onSubmit={async (values) => {
@@ -58,6 +66,10 @@ export default function FormularioPdf({ userId }) {
                 data.append('nMeses', values.nMeses);
                 data.append('nCuenta', values.nCuenta);
                 data.append('fechaI', moment(fechaI).format('YYYY-MM-DD'));
+                data.append('nEstacionamiento', values.nEstacionamiento);
+                data.append('nBienes', values.nBienes);
+                data.append('nombreEsta', values.nombreEsta);
+                data.append('nInsc', moment(startDate).format('YYYY-MM-DD'));
                 data.append('id', id);
 
                 await axios
@@ -86,47 +98,88 @@ export default function FormularioPdf({ userId }) {
             }}
         >
             {(formProps) => (
-                <div className=''>
+                <div className='container mt-5' style={{ height: '80vh' }}>
                     <h1 className='my-4 font-weight-bold .display-4'>
                         Generar Contrato PDF
                     </h1>
+                    <p className='my-4 '>
+                        Para poder generar tu contrato necesitamos que nos
+                        brindes algunos datos adicionales.
+                    </p>
                     <Form>
-                        <label>Banco</label>
-                        <FormSelect.Select
-                            aria-label='Default select example'
-                            name='banco'
-                            onChange={handleclick}
-                            value={banco}
-                        >
-                            <option>Selecciona tu Banco</option>
-                            <option>BANCO DE CHILE</option>
-                            <option>BANCO INTERNACIONAL</option>
-                            <option>SCOTIABANK CHILE</option>
-                            <option>BANCO DE CREDITO E INVERSIONES</option>
-                            <option>BANCO BICE</option>
-                            <option>BANCO SANTANDER-CHILE </option>
-                            <option>BANCO ITAÚ CORPBANCA</option>
-                            <option>BANCO FALABELLA</option>
-                            <option>BANCO RIPLEY </option>
-                            <option>BANCO DEL ESTADO</option>
-                        </FormSelect.Select>
+                        <div className='row align-items-center'>
+                            <div className='col-6 mb-2'>
+                                <label>Banco</label>
+                                <FormSelect.Select
+                                    aria-label='Default select example'
+                                    name='banco'
+                                    onChange={handleclick}
+                                    value={banco}
+                                >
+                                    <option>Selecciona tu Banco</option>
+                                    <option>BANCO DE CHILE</option>
+                                    <option>BANCO INTERNACIONAL</option>
+                                    <option>SCOTIABANK CHILE</option>
+                                    <option>
+                                        BANCO DE CREDITO E INVERSIONES
+                                    </option>
+                                    <option>BANCO BICE</option>
+                                    <option>BANCO SANTANDER-CHILE </option>
+                                    <option>BANCO ITAÚ CORPBANCA</option>
+                                    <option>BANCO FALABELLA</option>
+                                    <option>BANCO RIPLEY </option>
+                                    <option>BANCO DEL ESTADO</option>
+                                </FormSelect.Select>
 
-                        <TextField
-                            label='Nº Cuenta Corriente'
-                            name='nCuenta'
-                            type='number'
-                        />
-                        <TextField
-                            label='Nº de meses del arriendo'
-                            name='nMeses'
-                            type='number'
-                        />
-                        <Calendario
-                            handleCalendario={handleCalendario}
-                            fechaI={fechaI}
-                        />
+                                <TextField
+                                    label='N.º Cuenta Corriente'
+                                    name='nCuenta'
+                                    type='number'
+                                />
+                            </div>
+                            <div className='col-6 mb-2'>
+                                <TextField
+                                    label='N.º de meses del arriendo'
+                                    name='nMeses'
+                                    type='number'
+                                />
+                                <label>Fecha de inicio del arriendo</label>
+                                <Calendario
+                                    handleCalendario={handleCalendario}
+                                    fechaI={fechaI}
+                                />
+                            </div>
+                            <div className='col-6 mb-2'>
+                                <TextField
+                                    label='Nombre del edificio donde esta ubicado el estacionamiento'
+                                    name='nombreEsta'
+                                    type='text'
+                                />
+                                <TextField
+                                    label='N.º de estacionamiento'
+                                    name='nEstacionamiento'
+                                    type='number'
+                                />
+                            </div>
+                            <div className='col-6 mb-2'>
+                                <TextField
+                                    label='N.º de inscripción en bienes raíces'
+                                    name='nBienes'
+                                    type='number'
+                                />
+                                <label>
+                                    Año de inscripción en bienes raíces
+                                </label>
+                                <DatePicker
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    showYearPicker
+                                    dateFormat='yyyy'
+                                />
+                            </div>
+                        </div>
                         <button className='btn btn-dark mt-3' type='submit'>
-                            Registrar
+                            Generar
                         </button>
                     </Form>
                 </div>

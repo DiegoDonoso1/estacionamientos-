@@ -6,8 +6,9 @@ import StarIcon from '@mui/icons-material/Star';
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import './mapa.css';
-import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation, Link } from 'react-router-dom';
 import { Button, Row, Col, Container, Card } from 'react-bootstrap';
+import { Icon } from '@iconify/react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -164,37 +165,62 @@ export default function Mapa() {
                                                                 </b>
                                                             </span>
                                                         </div> */}
-                                                        <Card
-                                                            className='border-0 card-pop'
+                                                        <Link
                                                             style={{
-                                                                width: '18rem',
+                                                                color: '#000',
+                                                                textDecoration:
+                                                                    'none',
                                                             }}
+                                                            className='text-decoration-none'
+                                                            to={`/estacionamientos/${p.id}`}
                                                         >
-                                                            <Card.Img
-                                                                className='rounded-3 card-img-pop'
-                                                                variant='top'
-                                                                src={`http://127.0.0.1:8000/media/${imagenes[index].imagen}`}
-                                                            />
-                                                            <Card.Body className='p-0'>
-                                                                <Card.Title className='fs-5 fw-normal mt-1 mb-1'>
-                                                                    {p.tittle}
-                                                                </Card.Title>
-                                                                <Card.Text className='text-muted mb-1 lh-1'>
-                                                                    {
-                                                                        p.direccion
-                                                                    }
-                                                                </Card.Text>
-                                                                <Card.Text className='fw-normal '>
-                                                                    $
-                                                                    {new Intl.NumberFormat(
-                                                                        'de-DE'
-                                                                    ).format(
-                                                                        p.precio
-                                                                    ) + ' '}
-                                                                    CLP
-                                                                </Card.Text>
-                                                            </Card.Body>
-                                                        </Card>
+                                                            <Card
+                                                                className='border-0 card-pop'
+                                                                style={{
+                                                                    width: '18rem',
+                                                                }}
+                                                            >
+                                                                <Card.Img
+                                                                    className='rounded-3 card-img-pop'
+                                                                    variant='top'
+                                                                    src={`http://127.0.0.1:8000/media/${imagenes[index].imagen}`}
+                                                                />
+                                                                <Card.Body className='p-0'>
+                                                                    <Card.Title className='fs-5 fw-normal mt-1 mb-1'>
+                                                                        {
+                                                                            p.tittle
+                                                                        }
+                                                                    </Card.Title>
+                                                                    <Card.Text className='text-muted mb-1 lh-1'>
+                                                                        {
+                                                                            p.direccion
+                                                                        }
+                                                                    </Card.Text>
+                                                                    <Card.Text className='fw-normal d-flex justify-content-between'>
+                                                                        <span>
+                                                                            $
+                                                                            {new Intl.NumberFormat(
+                                                                                'de-DE'
+                                                                            ).format(
+                                                                                p.precio
+                                                                            ) +
+                                                                                ' '}
+                                                                            CLP
+                                                                        </span>
+                                                                        <span>
+                                                                            {
+                                                                                p.promedio
+                                                                            }{' '}
+                                                                            <Icon
+                                                                                icon='ant-design:star-filled'
+                                                                                width='15'
+                                                                                height='15'
+                                                                            />
+                                                                        </span>
+                                                                    </Card.Text>
+                                                                </Card.Body>
+                                                            </Card>
+                                                        </Link>
                                                     </Popup>
                                                 )}
                                             </>

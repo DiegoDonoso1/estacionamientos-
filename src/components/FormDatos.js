@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { TextField } from './TextField';
@@ -6,10 +6,22 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import PersonaData from '../assets/PersonaData.png';
+import { Form as Forms } from 'react-bootstrap';
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+} from 'react-places-autocomplete';
 
 export default function FormDatos() {
+    const [address, setAddress] = useState('');
     const navigate = useNavigate();
     const { user, isLoading } = useAuth0();
+
+    const handleSelect = async (value) => {
+        const results = await geocodeByAddress(value);
+        const latLng = await getLatLng(results[0]);
+        setAddress(value);
+    };
 
     const validate = Yup.object({
         username: Yup.string()
@@ -37,26 +49,29 @@ export default function FormDatos() {
         return (
             <Formik
                 initialValues={{
-                    username: ``,
+                    username: `${user.name}`,
                     nombre: '',
                     apellidoP: '',
                     apellidoM: '',
                     celular: '',
                     rut: '',
                     fechaNacimiento: '',
+                    direccion: ``,
                 }}
                 /* validationSchema={validate} */
                 onSubmit={async (values) => {
                     let data = new FormData();
 
+                    data.append('imagenes', values.imagenes);
                     data.append('username', user.name);
                     data.append('nombre', values.nombre);
                     data.append('apellidoP', values.apellidoP);
                     data.append('apellidoM', values.apellidoM);
                     data.append('celular', values.celular);
                     data.append('rut', values.rut);
+                    data.append('direccion', address);
                     data.append('fechaNacimiento', values.fechaNacimiento);
-
+                    console.log(values);
                     await axios
                         .post('http://127.0.0.1:8000/user/user/', data)
                         .then((response) => {
@@ -115,6 +130,85 @@ export default function FormDatos() {
                                         name='fechaNacimiento'
                                         type='date'
                                     />
+                                    <Forms.Group
+                                        controlId='imagenes'
+                                        className='mb-3'
+                                    >
+                                        <Forms.Label>Imagenes</Forms.Label>
+                                        <Forms.Control
+                                            type='file'
+                                            name='imagenes'
+                                            onChange={(event) =>
+                                                formik.setFieldValue(
+                                                    'imagenes',
+                                                    event.target.files[0]
+                                                )
+                                            }
+                                        />
+                                    </Forms.Group>
+                                    <div>
+                                        <PlacesAutocomplete
+                                            value={address}
+                                            onChange={setAddress}
+                                            onSelect={handleSelect}
+                                        >
+                                            {({
+                                                getInputProps,
+                                                suggestions,
+                                                getSuggestionItemProps,
+                                                loading,
+                                            }) => (
+                                                <div className='mt-3'>
+                                                    <>
+                                                        <div className=''>
+                                                            <input
+                                                                {...getInputProps(
+                                                                    {
+                                                                        placeholder:
+                                                                            'Ingresa tu dirección',
+                                                                    }
+                                                                )}
+                                                            />
+                                                        </div>
+                                                    </>
+
+                                                    <div>
+                                                        {loading ? (
+                                                            <div>
+                                                                ...loading
+                                                            </div>
+                                                        ) : null}
+
+                                                        {suggestions.map(
+                                                            (suggestion) => {
+                                                                const style = {
+                                                                    backgroundColor:
+                                                                        suggestion.active
+                                                                            ? '#41b6e6'
+                                                                            : '#fff',
+                                                                };
+
+                                                                return (
+                                                                    <div
+                                                                        {...getSuggestionItemProps(
+                                                                            suggestion,
+                                                                            {
+                                                                                style,
+                                                                            }
+                                                                        )}
+                                                                    >
+                                                                        {
+                                                                            suggestion.description
+                                                                        }
+                                                                    </div>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </PlacesAutocomplete>
+                                    </div>
                                     <button
                                         className='btn btn-dark mt-3'
                                         type='submit'

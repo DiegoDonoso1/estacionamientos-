@@ -8,7 +8,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getUser } from '../../api/Estacionamiento';
 import './Form.css';
 import { Form as Forms } from 'react-bootstrap';
-import Calendario from '../Calendario';
 
 export default function FormEsta({ coordinates, address }) {
     const { user } = useAuth0();
@@ -217,7 +216,6 @@ export default function FormEsta({ coordinates, address }) {
                         <button className='btn btn-dark mt-3' type='submit'>
                             Registrar
                         </button>
-                        <Calendario />
                     </Form>
                 </div>
             )}

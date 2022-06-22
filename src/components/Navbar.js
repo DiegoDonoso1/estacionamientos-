@@ -7,69 +7,79 @@ import LogoutBotton from './LogoutBotton';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { Icon } from '@iconify/react';
 
-export default function NavbarComponent(props) {
+export default function NavbarComponent({ id, admin, navbar, handleNavbar }) {
     const { isAuthenticated, isLoading } = useAuth0();
-    const idUser = props.id;
+    const idUser = id;
+
     if (!isLoading)
         return (
-            <Navbar collapseOnSelect expand='lg' bg='light' variant='light'>
-                <Container fluid>
-                    <Navbar.Brand className='fs-4 fw-normal'>
-                        <NavLink
-                            className='text-decoration-none text-reset '
-                            to='./'
-                        >
-                            AparClick
-                            <Icon
-                                icon='ant-design:car-filled'
-                                color='#ff424d'
-                                width='31'
-                                height='30'
-                            />
-                        </NavLink>
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-                    <Navbar.Collapse id='responsive-navbar-nav'>
-                        <Nav className='me-auto'>
-                            <Nav.Link>
+            <>
+                {navbar ? (
+                    <Navbar
+                        collapseOnSelect
+                        expand='lg'
+                        bg='light'
+                        variant='light'
+                    >
+                        <Container fluid>
+                            <Navbar.Brand className='fs-4 fw-normal'>
                                 <NavLink
-                                    className='text-decoration-none text-reset'
-                                    to={`/mapa`}
+                                    className='text-decoration-none text-reset '
+                                    to='./'
                                 >
-                                    Estacionamientos
+                                    AparClick
+                                    <Icon
+                                        icon='ant-design:car-filled'
+                                        color='#ff424d'
+                                        width='31'
+                                        height='30'
+                                    />
                                 </NavLink>
-                            </Nav.Link>
-                        </Nav>
-                        <Nav>
-                            <Nav.Link>
-                                {isAuthenticated && props.admin && (
-                                    <NavLink
-                                        className='text-decoration-none text-reset'
-                                        to={`/administrar`}
-                                    >
-                                        Administrar
-                                    </NavLink>
-                                )}
-                            </Nav.Link>
-                            <Nav.Link>
-                                {isAuthenticated && (
-                                    <NavLink
-                                        className='text-decoration-none text-reset'
-                                        to={`./perfil/${idUser}`}
-                                    >
-                                        Perfil
-                                    </NavLink>
-                                )}
-                            </Nav.Link>
+                            </Navbar.Brand>
+                            <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+                            <Navbar.Collapse id='responsive-navbar-nav'>
+                                <Nav className='me-auto'>
+                                    <Nav.Link>
+                                        <NavLink
+                                            className='text-decoration-none text-reset'
+                                            to={`/mapa`}
+                                        >
+                                            Estacionamientos
+                                        </NavLink>
+                                    </Nav.Link>
+                                </Nav>
+                                <Nav>
+                                    <Nav.Link>
+                                        {isAuthenticated && admin && (
+                                            <NavLink
+                                                className='text-decoration-none text-reset'
+                                                to={`/administrar`}
+                                            >
+                                                Administrar
+                                            </NavLink>
+                                        )}
+                                    </Nav.Link>
+                                    <Nav.Link>
+                                        {isAuthenticated && (
+                                            <NavLink
+                                                className='text-decoration-none text-reset'
+                                                to={`./perfil/${idUser}`}
+                                            >
+                                                Perfil
+                                            </NavLink>
+                                        )}
+                                    </Nav.Link>
 
-                            {isAuthenticated ? (
-                                <LogoutBotton />
-                            ) : (
-                                <LoginButton />
-                            )}
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+                                    {isAuthenticated ? (
+                                        <LogoutBotton />
+                                    ) : (
+                                        <LoginButton />
+                                    )}
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Container>
+                    </Navbar>
+                ) : null}
+            </>
         );
 }

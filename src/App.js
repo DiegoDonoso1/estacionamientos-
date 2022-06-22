@@ -21,8 +21,8 @@ import ListaEstacionamientos from './pages/ListaEstacionamientos';
 
 import { getUser } from './api/Estacionamiento';
 import EditarEsta from './pages/EditarPage';
-import Spinner from './components/spinner/Spinner';
 import FormularioPdf from './pages/FormularioPdf';
+import Spinner from './components/spinner/Spinner';
 
 function App() {
     const { isAuthenticated, isLoading, user } = useAuth0();
@@ -30,6 +30,11 @@ function App() {
     const [userId, setUserId] = useState();
     const [admin, setAdmin] = useState();
     const [promedio, setPromedio] = useState();
+    const [navbar, Setnavbar] = useState(true);
+
+    const handleNavbar = (reviewChanges) => {
+        Setnavbar(reviewChanges);
+    };
 
     const handlePromedio = (reviewChanges) => {
         setPromedio(reviewChanges);
@@ -67,7 +72,7 @@ function App() {
     return (
         <>
             <BrowserRouter>
-                <NavbarComponent id={userId} admin={admin} />
+                <NavbarComponent id={userId} admin={admin} navbar={navbar} />
                 <Routes>
                     <Route path='/' element={<HomePage />} />
                     <Route path='/terminos' element={<AboutPage />} />
@@ -122,6 +127,7 @@ function App() {
                             <DatosPage
                                 usuario={usuario}
                                 handleDatos={handleDatos}
+                                handleNavbar={handleNavbar}
                             />
                         }
                     />

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Row, Col, Container, Card } from 'react-bootstrap';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import './ListaEstacionamientos.css';
+import { Icon } from '@iconify/react';
 
 export default function ListaEstacionamientos() {
     const navigate = useNavigate();
@@ -143,12 +144,22 @@ export default function ListaEstacionamientos() {
                                             <Card.Text className='text-muted mb-1 lh-1'>
                                                 {p.direccion}
                                             </Card.Text>
-                                            <Card.Text className='fw-normal '>
-                                                $
-                                                {new Intl.NumberFormat(
-                                                    'de-DE'
-                                                ).format(p.precio) + ' '}
-                                                CLP
+                                            <Card.Text className='fw-normal d-flex justify-content-between'>
+                                                <span>
+                                                    $
+                                                    {new Intl.NumberFormat(
+                                                        'de-DE'
+                                                    ).format(p.precio) + ' '}
+                                                    CLP
+                                                </span>
+                                                <span>
+                                                    {p.promedio}{' '}
+                                                    <Icon
+                                                        icon='ant-design:star-filled'
+                                                        width='15'
+                                                        height='15'
+                                                    />
+                                                </span>
                                             </Card.Text>
                                         </Card.Body>
                                     </Card>

@@ -9,23 +9,40 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { Button, Dropdown } from 'react-bootstrap';
 
-export default function Review({ reviews, reviewChanged, UserUnique }) {
+export default function Review({
+    reviews,
+    reviewChanged,
+    UserUnique,
+    promedioChanged,
+}) {
     const MySwal = withReactContent(Swal);
     const { id } = useParams();
     const { isLoading, user, isAuthenticated } = useAuth0();
     const navigate = useNavigate();
+    const [reviewStarEdit, setReviewStarEdit] = useState();
+    const [reviewEdit, setReviewEdit] = useState();
 
     const handleEdit = (e) => {
         const id = e.currentTarget.id;
-        navigate('addreview');
+        reviews.map((item) => {
+            if (id == item.id) {
+                setReviewEdit(item.description);
+                setReviewStarEdit(item.rating);
+            }
+        });
+        navigate('EditReview');
     };
 
     const handleReviews2 = (reviewChanges) => {
         reviewChanged(reviewChanges);
     };
 
+    const handlePromedio = (reviewChanges) => {
+        promedioChanged(reviewChanges);
+    };
+
     const handleDelete = async (e) => {
-        const id = e.currentTarget.id;
+        const idDelete = e.currentTarget.id;
         MySwal.fire({
             title: 'Estas seguro?',
             text: 'No podras revertir esto',
@@ -37,25 +54,37 @@ export default function Review({ reviews, reviewChanged, UserUnique }) {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
-                    .delete(`http://127.0.0.1:8000/review/review/${id}`)
+                    .delete(`http://127.0.0.1:8000/review/review/${idDelete}`)
                     .then((response) => {
                         if (response.data.message == 'success') {
+                            console.log(id);
                             axios
-                                .get(`http://127.0.0.1:8000/review/review/`)
+                                .get(
+                                    `http://127.0.0.1:8000/review/review/${id}`
+                                )
                                 .then((res) => {
-                                    const resulta = res.data.reviews
-                                        .reverse()
-                                        .reduce((ac, item) => {
-                                            if (
-                                                !ac.find(
-                                                    (d) => d.user == item.user
-                                                )
-                                            ) {
-                                                ac.push(item);
-                                            }
-                                            return ac;
-                                        }, []);
-                                    reviewChanged(resulta);
+                                    console.log(res);
+                                    if (res.data.message == 'Success') {
+                                        const resulta =
+                                            res.data.review.reverse();
+
+                                        /* .reduce((ac, item) => {
+                                                if (
+                                                    !ac.find(
+                                                        (d) =>
+                                                            d.user == item.user
+                                                    )
+                                                ) {
+                                                    ac.push(item);
+                                                }
+                                                return ac;
+                                            }, []); */
+                                        reviewChanged(resulta);
+                                        promedioChanged(res.data.promedio);
+                                    } else {
+                                        promedioChanged(0);
+                                        reviewChanged(undefined);
+                                    }
                                 });
                         }
                     });
@@ -77,6 +106,7 @@ export default function Review({ reviews, reviewChanged, UserUnique }) {
                         <FormReview
                             review={reviews}
                             reviewChange={handleReviews2}
+                            handlePromedio={handlePromedio}
                         />
                     }
                 />
@@ -87,6 +117,8 @@ export default function Review({ reviews, reviewChanged, UserUnique }) {
                         <EditReview
                             review={reviews}
                             reviewChange={handleReviews2}
+                            reviewEdit={reviewEdit}
+                            reviewStarEdit={reviewStarEdit}
                         />
                     }
                 />
@@ -130,7 +162,7 @@ export default function Review({ reviews, reviewChanged, UserUnique }) {
                                                                     </Dropdown.Toggle>
 
                                                                     <Dropdown.Menu>
-                                                                        <Dropdown.Item
+                                                                        {/* <Dropdown.Item
                                                                             id={
                                                                                 item.id
                                                                             }
@@ -139,7 +171,7 @@ export default function Review({ reviews, reviewChanged, UserUnique }) {
                                                                             }
                                                                         >
                                                                             Editar
-                                                                        </Dropdown.Item>
+                                                                        </Dropdown.Item> */}
                                                                         <Dropdown.Item
                                                                             id={
                                                                                 item.id

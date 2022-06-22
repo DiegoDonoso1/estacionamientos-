@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import StarRating from './StarRating/StarRating';
 
-export default function EditReview({ reviews, reviewChange }) {
+export default function EditReview({ reviews, reviewChange, reviewEdit }) {
     const [rating, setRating] = useState(null);
     const { user, isAuthenticated } = useAuth0();
     let navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function EditReview({ reviews, reviewChange }) {
             initialValues={{
                 username: `${user.name}`,
                 rating: ``,
-                description: '',
+                description: `${reviewEdit}`,
                 parking_id: parseInt(id),
             }}
             /* validationSchema={validate} */
@@ -48,9 +48,11 @@ export default function EditReview({ reviews, reviewChange }) {
                     .then((response) => {
                         if (response.data.message == 'success') {
                             axios
-                                .get(`http://127.0.0.1:8000/review/review/`)
+                                .get(
+                                    `http://127.0.0.1:8000/review/review/${id}`
+                                )
                                 .then((res) => {
-                                    reviewChange(res.data.reviews.reverse());
+                                    reviewChange(res.data.review.reverse());
                                 });
                         }
                     });

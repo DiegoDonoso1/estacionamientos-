@@ -7,10 +7,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import StarRating from './StarRating/StarRating';
 import { Button } from 'react-bootstrap';
-
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { Icon } from '@iconify/react';
 
-export default function FormReview({ reviews, reviewChange }) {
+export default function FormReview({ reviews, reviewChange, handlePromedio }) {
+    const MySwal = withReactContent(Swal);
     const [rating, setRating] = useState(null);
     const { user, isAuthenticated, isLoading } = useAuth0();
     let navigate = useNavigate();
@@ -55,11 +57,12 @@ export default function FormReview({ reviews, reviewChange }) {
                     .then((response) => {
                         if (response.data.message == 'success') {
                             axios
-                                .get(`http://127.0.0.1:8000/review/review/`)
+                                .get(
+                                    `http://127.0.0.1:8000/review/review/${id}`
+                                )
                                 .then((res) => {
-                                    const resulta = res.data.reviews
-                                        .reverse()
-                                        .reduce((ac, item) => {
+                                    const resulta = res.data.review.reverse();
+                                    /* .reduce((ac, item) => {
                                             if (
                                                 !ac.find(
                                                     (d) => d.user == item.user
@@ -68,8 +71,11 @@ export default function FormReview({ reviews, reviewChange }) {
                                                 ac.push(item);
                                             }
                                             return ac;
-                                        }, []);
+                                        }, []); */
                                     reviewChange(resulta);
+                                    handlePromedio(res.data.promedio);
+                                    Swal.fire('Comentario enviado');
+                                    navigate('../', { replace: true });
                                 });
                         }
                     });

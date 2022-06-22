@@ -4,12 +4,15 @@ import getEstacionamiento from '../api/Estacionamiento';
 import { useParams, Link } from 'react-router-dom';
 import noEstacionamiento from '../assets/noEstacionamiento.png';
 import estacionamientosvg from '../assets/estacionamiento.svg';
-import { height } from '@mui/system';
+import axios from 'axios';
 
-export default function Profile({ promedio }) {
+import { Icon } from '@iconify/react';
+
+export default function Profile() {
     const [estacionamiento, setEstacionamiento] = useState([]);
     const { id } = useParams();
     const [imagen, setImagenes] = useState([]);
+    const [promedio, setPromedio] = useState();
 
     const getData = async () => {
         const data = await getEstacionamiento();
@@ -28,7 +31,6 @@ export default function Profile({ promedio }) {
                 });
             }
         });
-
         const result = imagen.reduce((acc, item, i) => {
             if (!acc.find((d) => d.producto_id == item.producto_id)) {
                 acc.push(item);
@@ -104,12 +106,22 @@ export default function Profile({ promedio }) {
                                             <Card.Text className='text-muted mb-1 lh-1'>
                                                 {esta.direccion}
                                             </Card.Text>
-                                            <Card.Text className='fw-normal '>
-                                                $
-                                                {new Intl.NumberFormat(
-                                                    'de-DE'
-                                                ).format(esta.precio) + ' '}
-                                                CLP
+                                            <Card.Text className='fw-normal d-flex justify-content-between'>
+                                                <span>
+                                                    $
+                                                    {new Intl.NumberFormat(
+                                                        'de-DE'
+                                                    ).format(esta.precio) + ' '}
+                                                    CLP
+                                                </span>
+                                                <span>
+                                                    {esta.promedio}{' '}
+                                                    <Icon
+                                                        icon='ant-design:star-filled'
+                                                        width='15'
+                                                        height='15'
+                                                    />
+                                                </span>
                                             </Card.Text>
                                         </Card.Body>
                                     </Card>

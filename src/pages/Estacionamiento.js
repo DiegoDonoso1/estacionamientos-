@@ -13,7 +13,7 @@ import { Icon } from '@iconify/react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-export default function Estacionamiento({ promedioChanged, promedio }) {
+export default function Estacionamiento({ promedioChanged }) {
     const { isLoading, user, isAuthenticated } = useAuth0();
     let location = useLocation();
     const MySwal = withReactContent(Swal);
@@ -25,14 +25,7 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
     const [nombre, setNombre] = useState();
     const [correo, setCorreo] = useState();
     const [userUnique, setUserUnique] = useState();
-
-    const [descr, SetDesc] = useState();
-    const [tittlee, SetTittle] = useState();
-    const [precioo, SetPrecio] = useState();
-    const [direccionn, SetDireccion] = useState();
-    const [idEstacionamientoo, SetIdidEstacionamiento] = useState();
-    const [longg, SetLong] = useState();
-    const [latt, SetLat] = useState();
+    const [promedio, setPromedio] = useState();
 
     const desc = estacionamiento.desc;
     const tittle = estacionamiento.tittle;
@@ -45,18 +38,11 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
     const user_id = estacionamiento.user_id;
 
     const handleClick = (e) => {
-        /* estacionamiento.map((item, index) => {
-            if (index == e.currentTarget.id) { */
-        SetDesc(estacionamiento.desc);
-        SetTittle(estacionamiento.tittle);
-        SetPrecio(estacionamiento.precio);
-        SetDireccion(estacionamiento.direccion);
-        SetIdidEstacionamiento(estacionamiento.id);
-        SetLong(estacionamiento.long);
-        SetLat(estacionamiento.lat);
-        /*  }
-        } */ /* ); */
         navigate(`editar/`, { state: true });
+    };
+
+    const handlePromedio = (reviewChanges) => {
+        setPromedio(reviewChanges);
     };
 
     const handleClickDelete = (e) => {
@@ -94,29 +80,31 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
         { rating: 0 }
     );
 
-    promedioChanged(sumaStars.rating / reviews.length);
+    /*  promedioChanged(sumaStars.rating / reviews.length); */
 
     useEffect(() => {
         const getReviews = async () => {
             const reviewList = [];
             const { data } = await axios.get(
-                `http://127.0.0.1:8000/review/review/`
+                `http://127.0.0.1:8000/review/review/${id}`
             );
-            if (data.reviews != undefined) {
-                const result = await data.reviews;
+            console.log(data);
+            if (data.review != undefined) {
+                const result = await data.review;
                 result.map((res) => {
                     if (res.parking_id == id) {
                         reviewList.push(res);
                     }
                 });
-                const resulta = reviewList.reverse().reduce((ac, item) => {
+                const resulta = reviewList.reverse(); /* .reduce((ac, item) => {
                     if (!ac.find((d) => d.user == item.user)) {
                         ac.push(item);
                     }
                     return ac;
-                }, []);
+                }, []); */
                 setUserUnique(resulta);
                 setReviews(reviewList);
+                setPromedio(data.promedio);
             }
         };
         getReviews();
@@ -140,23 +128,22 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
 
     useEffect(() => {
         response();
-    }, []);
+    }, [location.state]);
 
     if (!isLoading)
         return (
             <>
                 {location.state ? (
-                    //Cambiar datos context a los antiguos
                     // eslint-disable-next-line no-sequences
                     <Outlet
                         context={[
-                            precioo,
-                            direccionn,
-                            tittlee,
-                            descr,
-                            idEstacionamientoo,
-                            latt,
-                            longg,
+                            precio,
+                            direccion,
+                            tittle,
+                            desc,
+                            idEstacionamiento,
+                            lat,
+                            long,
                         ]}
                     />
                 ) : (
@@ -233,6 +220,7 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
                                 nombre={nombre}
                                 idEstacionamiento={idEstacionamiento}
                                 user_id={user_id}
+                                reviews={reviews}
                             />
                         </div>
                         <SectionStars promedio={promedio} />
@@ -240,6 +228,8 @@ export default function Estacionamiento({ promedioChanged, promedio }) {
                             reviews={reviews}
                             reviewChanged={handleReview1}
                             UserUnique={userUnique}
+                            promedioChanged={handlePromedio}
+                            promedio={promedio}
                         />
                         <Footer />
                     </>

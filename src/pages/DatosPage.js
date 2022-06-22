@@ -3,9 +3,8 @@ import FormDatos from '../components/FormDatos';
 import { useAuth0 } from '@auth0/auth0-react';
 import Spinner from '../components/spinner/Spinner';
 import { useNavigate } from 'react-router-dom';
-import HomePage from './HomePage';
 
-export default function DatosPage({ usuario, handleDatos }) {
+export default function DatosPage({ usuario, handleDatos, handleNavbar }) {
     const { isLoading, user } = useAuth0();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -24,6 +23,11 @@ export default function DatosPage({ usuario, handleDatos }) {
             spinner();
         }
     }, [usuario]);
+
+    useEffect(() => {
+        handleNavbar(false);
+        return () => handleNavbar(true);
+    }, [handleNavbar]);
 
     console.log(usuario);
 

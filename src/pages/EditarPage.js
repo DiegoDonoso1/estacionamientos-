@@ -67,7 +67,6 @@ export default function EditarEsta() {
                 data.append('direccion', address);
                 data.append('lat', coordinates.lat);
                 data.append('long', coordinates.lng); */
-                console.log(values);
 
                 await axios
                     .put(
