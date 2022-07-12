@@ -44,7 +44,7 @@ export default function Profile() {
 
     useEffect(() => {
         getData();
-    }, []);
+    }, [id]);
 
     return (
         <>

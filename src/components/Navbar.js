@@ -63,7 +63,7 @@ export default function NavbarComponent({ id, admin, navbar, handleNavbar }) {
                                         {isAuthenticated && (
                                             <NavLink
                                                 className='text-decoration-none text-reset'
-                                                to={`./perfil/${idUser}`}
+                                                to={`perfil/${idUser}`}
                                             >
                                                 Perfil
                                             </NavLink>

@@ -58,6 +58,10 @@ export default function FormularioPdf({ userId }) {
                 nBienes: ``,
                 nombreEsta: ``,
                 nInsc: ``,
+                nombreArrendador: ``,
+                apellidoArrendador: ``,
+                rutArrendador: ``,
+                dirArrendador: ``,
             }}
             //validationSchema={validate}
             onSubmit={async (values) => {
@@ -71,6 +75,10 @@ export default function FormularioPdf({ userId }) {
                 data.append('nombreEsta', values.nombreEsta);
                 data.append('nInsc', moment(startDate).format('YYYY-MM-DD'));
                 data.append('id', id);
+                data.append('nombreArrendador', values.nombreArrendador);
+                data.append('apellidoArrendador', values.apellidoArrendador);
+                data.append('rutArrendador', values.rutArrendador);
+                data.append('dirArrendador', values.dirArrendador);
 
                 await axios
                     .post(`http://127.0.0.1:8000/datosContrato/pdf/`, data)
@@ -108,7 +116,7 @@ export default function FormularioPdf({ userId }) {
                     </p>
                     <Form>
                         <div className='row align-items-center'>
-                            <div className='col-6 mb-2'>
+                            <div className='col-6 '>
                                 <label>Banco</label>
                                 <FormSelect.Select
                                     aria-label='Default select example'
@@ -137,7 +145,7 @@ export default function FormularioPdf({ userId }) {
                                     type='number'
                                 />
                             </div>
-                            <div className='col-6 mb-2'>
+                            <div className='col-6 '>
                                 <TextField
                                     label='N.º de meses del arriendo'
                                     name='nMeses'
@@ -149,7 +157,7 @@ export default function FormularioPdf({ userId }) {
                                     fechaI={fechaI}
                                 />
                             </div>
-                            <div className='col-6 mb-2'>
+                            <div className='col-6 '>
                                 <TextField
                                     label='Nombre del edificio donde esta ubicado el estacionamiento'
                                     name='nombreEsta'
@@ -161,7 +169,7 @@ export default function FormularioPdf({ userId }) {
                                     type='number'
                                 />
                             </div>
-                            <div className='col-6 mb-2'>
+                            <div className='col-6 '>
                                 <TextField
                                     label='N.º de inscripción en bienes raíces'
                                     name='nBienes'
@@ -175,6 +183,30 @@ export default function FormularioPdf({ userId }) {
                                     onChange={(date) => setStartDate(date)}
                                     showYearPicker
                                     dateFormat='yyyy'
+                                />
+                            </div>
+                            <div className='col-6'>
+                                <TextField
+                                    label='Nombre del arrendador'
+                                    name='nombreArrendador'
+                                    type='text'
+                                />
+                                <TextField
+                                    label='Dirección del arrendador'
+                                    name='dirArrendador'
+                                    type='text'
+                                />
+                            </div>
+                            <div className='col-6 '>
+                                <TextField
+                                    label='Apellidos del arrendador'
+                                    name='apellidoArrendador'
+                                    type='text'
+                                />
+                                <TextField
+                                    label='Rut del arrendador'
+                                    name='rutArrendador'
+                                    type='number'
                                 />
                             </div>
                         </div>

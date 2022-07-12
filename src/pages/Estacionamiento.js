@@ -48,16 +48,24 @@ export default function Estacionamiento({ promedioChanged }) {
     const handleClickDelete = (e) => {
         const id = e.currentTarget.id;
         MySwal.fire({
-            icon: 'question',
+            icon: 'warning',
             title: 'Estas seguro que quieres eliminar este estacionamiento?',
             showCancelButton: true,
             confirmButtonText: 'Eliminar',
             cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#FF424D',
+            cancelButtonColor: '#9E9796',
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 axios.delete(`http://127.0.0.1:8000/api/estacionamiento/${id}`);
-                MySwal.fire('Estacionamiento eliminado');
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Tu Estacionamiento ha sido borrado',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
                 navigate('/');
             }
         });
@@ -88,7 +96,6 @@ export default function Estacionamiento({ promedioChanged }) {
             const { data } = await axios.get(
                 `http://127.0.0.1:8000/review/review/${id}`
             );
-            console.log(data);
             if (data.review != undefined) {
                 const result = await data.review;
                 result.map((res) => {
@@ -130,7 +137,7 @@ export default function Estacionamiento({ promedioChanged }) {
         response();
     }, [location.state]);
 
-    if (!isLoading)
+    if (!isLoading )
         return (
             <>
                 {location.state ? (

@@ -5,6 +5,7 @@ import { getUserExact } from '../../api/Estacionamiento';
 import { useParams } from 'react-router-dom';
 import NotFoundPage from '../NotFoundPage';
 import Footer from '../../components/Footer';
+import Spinner from '../../components/spinner/Spinner';
 import './perfil.css';
 
 export default function Login({ promedio }) {
@@ -13,16 +14,15 @@ export default function Login({ promedio }) {
     const { id } = useParams();
 
     const response = async () => {
-        let info = null;
         const data = await getUserExact(id);
         setInfo(data);
     };
 
     useEffect(() => {
         response();
-    }, []);
+    }, [id]);
 
-    if (info == null) return <NotFoundPage />;
+    if (info == null) return <Spinner />;
     if (!isLoading)
         return (
             <>

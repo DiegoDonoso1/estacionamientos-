@@ -48,8 +48,8 @@ export default function Review({
             text: 'No podras revertir esto',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#FF424D',
+            cancelButtonColor: '#9E9796',
             confirmButtonText: 'Si, quiero eliminar',
         }).then((result) => {
             if (result.isConfirmed) {
@@ -88,11 +88,13 @@ export default function Review({
                                 });
                         }
                     });
-                MySwal.fire(
-                    'eliminado!',
-                    'Tu comentario ha sido eliminado.',
-                    'success'
-                );
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Tu comentario ha sido borrado',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             }
         });
     };

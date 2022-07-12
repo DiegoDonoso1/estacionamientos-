@@ -79,11 +79,13 @@ export default function AdministrarPage(props) {
     const handleClickDelete = (e) => {
         const id = e.currentTarget.id;
         MySwal.fire({
-            icon: 'question',
+            icon: 'warning',
             title: 'Estas seguro que quieres eliminar este estacionamiento?',
             showCancelButton: true,
             confirmButtonText: 'Eliminar',
             cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#FF424D',
+            cancelButtonColor: '#9E9796',
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -100,7 +102,13 @@ export default function AdministrarPage(props) {
                                 );
                         }
                     });
-                MySwal.fire('Estacionamiento eliminado');
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'El estacionamiento ha sido borrado',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
             }
         });
     };
