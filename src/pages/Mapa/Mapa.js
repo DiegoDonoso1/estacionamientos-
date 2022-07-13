@@ -225,7 +225,7 @@ export default function Mapa() {
                                                 )}
                                             </>
                                         ))}
-                                    <div>
+                                    <div className='text-center'>
                                         <Button
                                             className='rounded-pill'
                                             variant='danger'

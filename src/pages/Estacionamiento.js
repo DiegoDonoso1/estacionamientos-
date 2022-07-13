@@ -66,7 +66,7 @@ export default function Estacionamiento({ promedioChanged }) {
                     showConfirmButton: false,
                     timer: 1500
                     })
-                navigate('/');
+                navigate(`/perfil/${user_id}`);
             }
         });
     };

@@ -24,14 +24,7 @@ const Footer = () => {
                                 Términos y Condiciones
                             </Link>
                         </li>
-                        <li>
-                            <Link
-                                to='/SobreNosotros'
-                                className='d-inline-block text-decoration-none text-reset'
-                            >
-                                Sobre Nosotros
-                            </Link>
-                        </li>
+                        
                     </ul>
                 </div>
             </footer>

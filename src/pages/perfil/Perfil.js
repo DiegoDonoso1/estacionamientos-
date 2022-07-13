@@ -2,20 +2,26 @@ import { React, useState, useEffect } from 'react';
 import Profile from '../../components/Profile';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getUserExact } from '../../api/Estacionamiento';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import NotFoundPage from '../NotFoundPage';
 import Footer from '../../components/Footer';
 import Spinner from '../../components/spinner/Spinner';
+import { Button } from 'react-bootstrap';
 import './perfil.css';
 
 export default function Login({ promedio }) {
-    const { isAuthenticated, isLoading } = useAuth0();
+    const { isAuthenticated, isLoading, user } = useAuth0();
     const [info, setInfo] = useState();
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const response = async () => {
         const data = await getUserExact(id);
         setInfo(data);
+    };
+
+    const handleClick = () => {
+        navigate(`/formulario`);
     };
 
     useEffect(() => {
@@ -53,6 +59,24 @@ export default function Login({ promedio }) {
                                 <h5>{info.correo}</h5>
                                 <h6 className='fs-5'>+56 {info.celular}</h6>
                             </div>
+                            {isAuthenticated && info.correo == user.email &&(
+                                <div className='text-center'>
+                                    <Button 
+                                        onClick={handleClick}
+                                        style={
+                                            ({ padding: 'auto' },
+                                            { fontSize: '35px' },
+                                            { backgroundColor: 'rgb(255,66,77)' },
+                                            { boxShadow: 'none' }
+                                            )
+                                        }
+                                    className=' rounded-pill '
+                                    size='lg'
+                                    variant='danger'>
+                                        Publicar Estacionamiento
+                                    </Button>
+                                </div>
+                            )}
                         </div>
 
                         <div

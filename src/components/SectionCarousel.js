@@ -10,11 +10,11 @@ export default function SectionCarousel(props) {
                 style={{ backgroundColor: 'var(--main-bg-color)' }}
             >
                 <div className='row pt-2 row justify-content-evenly'>
-                    <div className='col ps-5 '>
+                    <div className='col-12 col-sm-6 ps-5 '>
                         <h1>{props.tittle} </h1>
                         <h6 className=''>{props.direccion}</h6>
                     </div>
-                    <div className='col'>
+                    <div className='col-12 col-sm-6 ps-sm-5'>
                         <p className='lead bold fs-2 fw-normal text-center ps-xl-5'>
                             $
                             {new Intl.NumberFormat('de-DE').format(

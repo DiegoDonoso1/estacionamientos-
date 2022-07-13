@@ -128,7 +128,7 @@ export default function Review({
 
             <div className='container mt-5'>
                 <div className='row '>
-                    <div className='col-12 pb-4 ps-5 mt-4'>
+                    <div className='col-12 pb-4 ps-sm-5 ps-4 mt-4'>
                         {UserUnique !== undefined &&
                             UserUnique.map(
                                 (item, i) =>
@@ -136,21 +136,22 @@ export default function Review({
                                     id == item.parking_id && (
                                         <>
                                             <div className='row'>
-                                                <div className='col-6'>
+                                                <div className='col-sm-6 col-12'>
                                                     <h4 className='fw-bolder'>
                                                         {item.user}
                                                     </h4>
                                                 </div>
                                                 {isAuthenticated &&
                                                     item.user == user.email && (
-                                                        <div className='col-6'>
-                                                            <div className='text-end'>
+                                                        <div className='col-sm-6 col-12'>
+                                                            <div className='text-end '>
                                                                 <Dropdown>
                                                                     <Dropdown.Toggle
                                                                         style={{
                                                                             backgroundColor:
                                                                                 '#fff',
                                                                         }}
+                                                                        className='ps-0 '
                                                                         id='dropdown-basic'
                                                                         size='sm'
                                                                         variant='light'
