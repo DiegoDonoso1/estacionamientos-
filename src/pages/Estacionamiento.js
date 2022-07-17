@@ -13,7 +13,7 @@ import { Icon } from '@iconify/react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-export default function Estacionamiento({ promedioChanged }) {
+export default function Estacionamiento({ promedioChanged,admin }) {
     const { isLoading, user, isAuthenticated } = useAuth0();
     let location = useLocation();
     const MySwal = withReactContent(Swal);
@@ -126,6 +126,7 @@ export default function Estacionamiento({ promedioChanged }) {
         if (response.id === res.estacionamientos.user_id) {
             setNombre(`${response.nombre} ${response.apellido_P}`);
             setCorreo(response.correo);
+            setCorreo(response.correo);
             setEstacionamiento(res.estacionamientos);
             const array = [];
             res.imagen.map((item) => array.push(item));
@@ -237,6 +238,7 @@ export default function Estacionamiento({ promedioChanged }) {
                             UserUnique={userUnique}
                             promedioChanged={handlePromedio}
                             promedio={promedio}
+                            admin={admin}
                         />
                         <Footer />
                     </>

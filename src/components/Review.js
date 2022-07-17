@@ -14,6 +14,7 @@ export default function Review({
     reviewChanged,
     UserUnique,
     promedioChanged,
+    admin
 }) {
     const MySwal = withReactContent(Swal);
     const { id } = useParams();
@@ -21,6 +22,7 @@ export default function Review({
     const navigate = useNavigate();
     const [reviewStarEdit, setReviewStarEdit] = useState();
     const [reviewEdit, setReviewEdit] = useState();
+
 
     const handleEdit = (e) => {
         const id = e.currentTarget.id;
@@ -141,8 +143,8 @@ export default function Review({
                                                         {item.user}
                                                     </h4>
                                                 </div>
-                                                {isAuthenticated &&
-                                                    item.user == user.email && (
+                                                {((admin)||(isAuthenticated &&
+                                                    item.user == user.email))  && (
                                                         <div className='col-sm-6 col-12'>
                                                             <div className='text-end '>
                                                                 <Dropdown>

@@ -44,6 +44,7 @@ function App() {
         setUsuario(reviewChanges);
     };
 
+
     if (user !== undefined) {
         const getData = async () => {
             const data = await getUser();
@@ -85,6 +86,7 @@ function App() {
                         path='/estacionamientos/:id/*'
                         element={
                             <Estacionamiento
+                                admin={admin}
                                 promedioChanged={handlePromedio}
                                 promedio={promedio}
                             />
